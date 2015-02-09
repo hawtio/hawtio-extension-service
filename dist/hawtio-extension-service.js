@@ -13,7 +13,7 @@ var HawtioExtensionService;
         this._registeredExtensions[extensionPointName] = [];
       }
       this._registeredExtensions[extensionPointName].push(fn);
-    }
+    };
 
     this.render = function(extensionPointName, element, scope) {
       var fns = this._registeredExtensions[extensionPointName];
@@ -36,7 +36,7 @@ var HawtioExtensionService;
 
   HawtioExtensionService._module.directive('hawtioExtension', function(HawtioExtension) {
     return {
-      restrict: 'E',
+      restrict: 'EA',
       link: function(scope, element, attrs) {
         if (attrs.name) {
           HawtioExtension.render(attrs.name, element, scope);
