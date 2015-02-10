@@ -43,10 +43,13 @@ gulp.task('clean', ['concat'], function() {
     .pipe(plugins.clean());
 });
 
-gulp.task('connect', function() {
+gulp.task('watch', ['build'], function() {
   plugins.watch([config.src, config.templates], function() {
     gulp.start('build');
   });
+});
+
+gulp.task('connect', ['watch'], function() {
   plugins.watch(['libs/**/*.js', 'libs/**/*.css', 'index.html', 'dist/' + config.js], function() {
     gulp.start('reload');
   });
