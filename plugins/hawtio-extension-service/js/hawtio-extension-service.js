@@ -34,7 +34,7 @@ var HawtioExtensionService;
     }
   });
 
-  HawtioExtensionService._module.directive('hawtioExtension', function(HawtioExtension) {
+  HawtioExtensionService._module.directive('hawtioExtension', ["HawtioExtension", function(HawtioExtension) {
     return {
       restrict: 'EA',
       link: function(scope, element, attrs) {
@@ -43,7 +43,7 @@ var HawtioExtensionService;
         }
       }
     };
-  });
+  }]);
 
   hawtioPluginLoader.addModule(HawtioExtensionService.pluginName);
 
