@@ -9,7 +9,7 @@ A plugin that provides an extension registration service and rendering directive
 #### Register an extension point callback
 In your hawtio plugin you can register an extension point callback like:
 
-```
+```javascript
   var module = angular.module("MyAwesomePlugin", []);
 
   module.config(['HawtioExtension', function(HawtioExtension) {
@@ -38,7 +38,7 @@ In your hawtio plugin you can register an extension point callback like:
     HawtioExtension.add("someExtensionPoint", function(scope){
       // some javascript here that does whatever you want
       return null;
-    });    
+    });
   }]);
 
   hawtioPluginLoader.addModule("MyAwesomePlugin");
@@ -51,7 +51,8 @@ It is important to note that currently callbacks are rendered in the order they 
 Any plugin can choose to render all the registered callbacks for an extension point.
 
 ##### Using the directive in an angular template (recommended)
-```
+
+```html
 <div>
   <h1>Some HTML template for my module</h1>
   <hawtio-extension name="someExtensionPoint"></hawtio-extension>
@@ -63,7 +64,8 @@ Using the directive method above is recommended in most cases, but does pass dow
 the current scope is into the callbacks so that they have the same data available to them.
 If you want to restrict the data passed down to the callbacks then you can call the service's
 render API directly.
-```
+
+```javascript
 // Where element is the DOM node that the results of all the callbacks
 // will be appended to, and scope is whatever data you want to make available
 // to the callbacks.
