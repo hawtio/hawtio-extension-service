@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     wiredep = require('wiredep').stream,
+    del = require('del'),
     gulpLoadPlugins = require('gulp-load-plugins');
 
 var plugins = gulpLoadPlugins({ lazy: false });
@@ -39,8 +40,7 @@ gulp.task('concat', ['templates'], function() {
 });
 
 gulp.task('clean', ['concat'], function() {
-  return gulp.src('./templates.js', { read: false })
-    .pipe(plugins.clean());
+  return del('./templates.js');
 });
 
 gulp.task('watch', ['build'], function() {
