@@ -1,8 +1,11 @@
 {
   "name": "@hawtio/extension-service",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "license": "Apache-2.0",
-  "repository": {"type": "git", "url": "https://github.com/hawtio/hawtio-extension-service.git"},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hawtio/hawtio-extension-service.git"
+  },
   "main": "dist/hawtio-extension-service.js",
   "types": "dist/hawtio-extension-service.d.ts",
   "scripts": {
