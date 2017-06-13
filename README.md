@@ -1,12 +1,17 @@
-## hawtio-extension-service
+# hawtio-extension-service
 
 A plugin that provides an extension registration service and rendering directive.  Extension points are named locations in a UI that other plugins can register callbacks which will add to the DOM.
 
-### Basic usage
-#### Install the bower package
-`bower install --save hawtio-extension-service`
+## Installation
 
-#### Register an extension point callback
+```
+yarn add @hawtio/extension-service
+```
+
+## Usage
+
+### Register an extension point callback
+
 In your hawtio plugin you can register an extension point callback like:
 
 ```javascript
@@ -46,11 +51,11 @@ In your hawtio plugin you can register an extension point callback like:
 
 It is important to note that currently callbacks are rendered in the order they were registered.  In the future we may extend the registration API to include a priority.
 
+### Render an extension point
 
-#### Render an extension point
 Any plugin can choose to render all the registered callbacks for an extension point.
 
-##### Using the directive in an angular template (recommended)
+#### Using the directive in an angular template (recommended)
 
 ```html
 <div>
@@ -59,7 +64,8 @@ Any plugin can choose to render all the registered callbacks for an extension po
 </div>
 ```
 
-##### Using the render API
+#### Using the render API
+
 Using the directive method above is recommended in most cases, but does pass down whatever
 the current scope is into the callbacks so that they have the same data available to them.
 If you want to restrict the data passed down to the callbacks then you can call the service's
