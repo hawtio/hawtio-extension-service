@@ -1,70 +1,35 @@
-var gulp = require('gulp'),
-    wiredep = require('wiredep').stream,
-    del = require('del'),
-    gulpLoadPlugins = require('gulp-load-plugins');
+var gulp = require('gulp');
+var connect = require('gulp-connect');
+var del = require('del');
+var ts = require('gulp-typescript');
+var tsProject = ts.createProject('tsconfig.json');
+var tsConfig = require('./tsconfig.json');
 
-var plugins = gulpLoadPlugins({ lazy: false });
-var pkg = require('./package.json');
-
-var config = {
-  src: 'plugins/**/*.js',
-  templates: 'plugins/**/*.html',
-  js: pkg.name + '.js',
-  template: pkg.name + '-template.js',
-  templateModule: pkg.name + '-template'
-};
-
-gulp.task('bower', function() {
-  gulp.src('index.html')
-    .pipe(wiredep({
-    }))
-    .pipe(gulp.dest('.'));
+gulp.task('clean', function() {
+  return del('dist/**/*');
 });
 
-gulp.task('templates', function() {
-  return gulp.src(config.templates)
-    .pipe(plugins.angularTemplatecache({
-      filename: 'templates.js',
-      root: 'plugins/',
-      standalone: true,
-      module: config.templateModule,
-      templateFooter: '}]); hawtioPluginLoader.addModule("' + config.templateModule + '");'
-    }))
-    .pipe(gulp.dest('.'));
+gulp.task('tsc', ['clean'], function() {
+  tsProject.src()
+    .pipe(tsProject())
+    .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('concat', ['templates'], function() {
-  return gulp.src([config.src, './templates.js'])
-    .pipe(plugins.concat(config.js))
-    .pipe(gulp.dest('./dist/'));
-});
-
-gulp.task('clean', ['concat'], function() {
-  return del('./templates.js');
-});
-
-gulp.task('watch', ['build'], function() {
-  plugins.watch([config.src, config.templates], function() {
-    gulp.start('build');
-  });
-});
-
-gulp.task('connect', ['watch'], function() {
-  plugins.watch(['libs/**/*.js', 'libs/**/*.css', 'index.html', 'dist/' + config.js], function() {
-    gulp.start('reload');
-  });
-  plugins.connect.server({
-    root: '.',
+gulp.task('connect', function() {
+  connect.server({
     livereload: true,
-    port: 2772,
-    fallback: 'index.html'
+    port: 2772
   });
 });
 
 gulp.task('reload', function() {
   gulp.src('.')
-    .pipe(plugins.connect.reload());
+    .pipe(connect.reload());
 });
 
-gulp.task('build', ['templates', 'concat', 'clean']);
-gulp.task('default', ['build', 'connect']);
+gulp.task('watch', function() {
+  gulp.watch(['index.html', tsConfig.include], ['reload']);
+});
+
+gulp.task('build', ['tsc']);
+gulp.task('default', ['build', 'connect', 'watch']);
