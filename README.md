@@ -1,3 +1,7 @@
+# DEPRECATED
+
+**This project has been moved to [hawtio-core](https://github.com/hawtio/hawtio-core)**
+
 # hawtio-extension-service
 
 A plugin that provides an extension registration service and rendering directive.  Extension points are named locations in a UI that other plugins can register callbacks which will add to the DOM.
